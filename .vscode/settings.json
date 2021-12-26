@@ -1,0 +1,5 @@
+{
+  "python.linting.pydocstyleArgs": [
+    "--ignore=D200,D212,D400,D415"
+  ]
+}
