@@ -1,21 +1,23 @@
 name: f1
 channels:
-  - defaults
+  - conda-forge
 dependencies:
-  - python=3.9
+  - python=3.10
   - pip=21
+    # dev
+  - black
+  - flake8
+  - ipykernel
+  - mamba
+  - mypy
+  - notebook
+  - pydocstyle
+  - pylint
+    # app
+  - pandas==1.4.1
+  - requests==2.27.1
+  - seaborn==0.11.2
+  - matplotlib==3.5.1
+  - types-requests==2.27.14
   - pip:
-      # devel
-      - black
-      - flake8
-      - ipykernel
-      - mypy
-      - notebook
-      - pydocstyle
-      - pylint
-      # F1
-      - pandas==1.3.5
-      - requests==2.26.0
-      - fastf1==2.1.13
-      - seaborn==0.11.2
-      - matplotlib==3.5.1
+      - fastf1==2.2.1

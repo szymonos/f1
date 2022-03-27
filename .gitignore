@@ -1,3 +1,8 @@
+# custom
+.tmp/
+.temp/
+_*.*
+
 # exclude images
 img/
 
