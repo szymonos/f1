@@ -2,7 +2,7 @@ name: f1
 channels:
   - conda-forge
 dependencies:
-  - python=3.10
+  - python=3.9
   - pip=21
     # dev
   - black
