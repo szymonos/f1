@@ -8,10 +8,9 @@ python -m plot_speed_traces
 # %% Load modules
 import os
 
-import fastf1
 import fastf1.plotting
 import matplotlib
-import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
 
 # parameters
 matplotlib.rcParams["figure.dpi"] = 200
