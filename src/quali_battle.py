@@ -1,16 +1,13 @@
 """
 python -m src.quali_battle
 """
-# %%Import modules
+
+# %% Import modules
+import matplotlib.pyplot as plt
 import pandas as pd
 import requests
-
-# Don't forget to 'pip install fastf1'
-from fastf1 import plotting
-
-# Don't forget to 'pip install seaborn'
 import seaborn as sns
-import matplotlib.pyplot as plt
+from fastf1 import plotting
 
 
 # %%
@@ -23,7 +20,7 @@ def ergast_retrieve(api_endpoint: str):
 
 
 # By changing these params you can easily get other seasons
-SEASON = 2021
+SEASON = 2022
 DRIVERS_TO_EXCLUDE = ["KUB"]
 CURRENT_ROUND = 1
 
@@ -45,7 +42,7 @@ while True:
 
     quali_results = {"round": CURRENT_ROUND}
 
-    for j in range(len(results)):
+    for j, _ in enumerate(results):
         driver = results[j]["Driver"]["code"]
         position = int(results[j]["position"])
         team = results[j]["Constructor"]["name"]
@@ -71,8 +68,8 @@ while True:
 all_quali_battle_results = []
 team_colors_palette = []
 
-for team in team_drivers:
-    drivers = team_drivers[team]
+for team, team_items in team_drivers.items():
+    drivers = team_items
 
     quali_results = all_quali_results[drivers]
 

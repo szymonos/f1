@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "alefragnani.project-manager",
+    "eamodio.gitlens",
+    "foxundermoon.shell-format",
+    "esbenp.prettier-vscode",
+    "mechatroner.rainbow-csv",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-toolsai.jupyter",
+    "ms-toolsai.jupyter-renderers",
+    "ms-vscode.powershell",
+    "nhoizey.gremlins",
+    "oderwat.indent-rainbow",
+    "shardulm94.trailing-spaces",
+    "usernamehw.errorlens"
+  ]
+}
