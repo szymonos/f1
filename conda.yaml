@@ -14,10 +14,10 @@ dependencies:
   - pydocstyle
   - pylint
     # app
-  - pandas==1.4.1
-  - requests==2.27.1
-  - seaborn==0.11.2
-  - matplotlib==3.5.1
-  - types-requests==2.27.14
+  - pandas
+  - requests
+  - seaborn
+  - matplotlib
+  - types-requests
   - pip:
-      - fastf1==2.2.1
+      - fastf1
