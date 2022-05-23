@@ -2,8 +2,8 @@ name: f1
 channels:
   - conda-forge
 dependencies:
-  - python=3.9
-  - pip=21
+  - python=3.10
+  - pip=22
     # dev
   - black
   - flake8
@@ -21,3 +21,4 @@ dependencies:
   - types-requests
   - pip:
       - fastf1
+      - pypath-magic
