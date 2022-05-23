@@ -46,7 +46,8 @@ if ($Option -in @('create', 'activate', 'remove')) {
     }
 
     # get environment name
-    $envName = (Select-String -Pattern '^name: +(\S+)' -Path $CondaFile).Matches.Groups[1].Value
+    $condaEnv = Get-Content -Path $CondaFile -Raw
+    $envName = (Select-String -Pattern '^name: +(\S+)' -InputObject $condaEnv).Matches.Groups[1].Value
     $envExists = $envName -in (Get-CondaEnvironment).Name 2>$null
 
     # exit environment before proceeding
@@ -77,6 +78,11 @@ if ($Option -in @('create', 'activate', 'remove')) {
         Write-Host "Creating `e[1;4m$envName`e[22;24m environment."
         & $mamba env create --file $CondaFile 2>$null
         Enter-CondaEnvironment $envName
+
+        if (Select-String -Pattern 'pypath-magic' -InputObject $condaEnv) {
+            # add workspaceFolder to python path
+            pypath add $PWD 2>$null
+        }
     } else {
         Write-Warning "`e[1;4m$envName`e[22;24m environment not found"
     }
