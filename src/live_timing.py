@@ -4,11 +4,28 @@ Display live timing
 python -m live_timing
 """
 
+import os
+
 import fastf1
 from fastf1.livetiming.data import LiveTimingData
 
-fastf1.Cache.enable_cache("cache_directory", force_renew=True)
+YEAR = 2022
+SESSION = "FP3"
+CACHE_DIR = "dist"
 
-livedata = LiveTimingData("saved_data.txt")
-session = fastf1.get_session(2021, "testing", 1)
+# create working folders if not exist
+if not os.path.exists(CACHE_DIR):
+    os.makedirs(CACHE_DIR)
+
+fastf1.Cache.enable_cache(CACHE_DIR)
+livedata = LiveTimingData("dist/saved_data.txt")
+
+# get GP
+schedule = fastf1.get_event_schedule(YEAR)
+print(schedule.Location)
+location = int(input("Select location: "))
+gp = schedule.Location[location]
+
+session = fastf1.get_session(YEAR, gp, SESSION)
+
 session.load(livedata=livedata)
