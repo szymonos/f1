@@ -1,7 +1,7 @@
 """
 Display event details
 =====================
-python -m session
+python -m src.session
 """
 # %% Load modules
 import os
@@ -14,6 +14,7 @@ from scripts import df_info
 YEAR = 2022
 SESSION = "R"
 CACHE_DIR = "dist"
+DF_INFO = False
 
 # create working folders if not exist
 if not os.path.exists(CACHE_DIR):
@@ -22,43 +23,27 @@ fastf1.Cache.enable_cache(CACHE_DIR)  # replace with your cache directory
 
 schedule = fastf1.get_event_schedule(YEAR)
 print(schedule.Location)
-location = int(input("Select location"))
+location = int(input("Select location: "))
 gp = schedule.Location[location]
 
 # %%Load a session and its telemetry data
 session = fastf1.get_session(YEAR, gp, SESSION)
 session.load()
+laps = session.laps
 
-# %%
-for driver_no in session.drivers:
-    session.get_driver(driver_no)[["DriverNumber", "Abbreviation"]]
+# %% convert laptimes to seconds and save to csv
+laps = laps.assign(
+    lap_time=laps["LapTime"].dt.total_seconds(),
+    sector1_time=laps["Sector1Time"].dt.total_seconds(),
+    sector2_time=laps["Sector2Time"].dt.total_seconds(),
+    sector3_time=laps["Sector3Time"].dt.total_seconds(),
+)
 
-session.drivers
-per = session.get_driver("11")
-per[["DriverNumber", "Abbreviation"]]
-session.get_driver("11")[["DriverNumber", "Abbreviation"]]
-
-print(session.drivers)
-print(session.get_driver("11"))
-print(session.laps.pick_driver("VER").pick_fastest())
-
-laps = session.laps.pick_driver("VER")
 laps.to_csv(f"{CACHE_DIR}/laps.csv")
-# %%
-df_info(laps)
+print(f'Results saved to \033[4m{CACHE_DIR}/laps.csv\033[24m')
 
 # %%
-session.drivers
-session.drivers
-dir(session.drivers)
-# %%
-driver = session.get_driver("1")
-driver["Abbreviation"]
-dir(driver)
+if DF_INFO:
+    df_info(laps)
 
 # %%
-for driver_no in session.drivers:
-    print(session.get_driver(driver_no)[["DriverNumber", "Abbreviation"]])
-# %%
-session.get_driver("11").name
-dir(session.get_driver("11"))
