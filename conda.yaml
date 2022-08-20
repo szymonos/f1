@@ -6,6 +6,7 @@ dependencies:
   - conda-libmamba-solver
   - pip
   - pip:
+      - pip
       # dev
       - black
       - flake8
