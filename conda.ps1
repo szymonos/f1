@@ -44,7 +44,7 @@ if ($Option -in @('create', 'activate', 'remove')) {
         Exit-CondaEnvironment
     } else {
         Write-Warning "File `e[4m$CondaFile`e[24m not found"
-        break
+        return
     }
 }
 
