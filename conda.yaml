@@ -3,19 +3,14 @@ channels:
   - pkgs/main
 dependencies:
   - python=3.9
-  - conda-libmamba-solver
   - pip
   - pip:
       - pip
       # dev
-      - black
-      - flake8
       - ipykernel
-      - mamba
       - mypy
       - notebook
       - pydocstyle
-      - pylint
         # app
       - pandas
       - requests
