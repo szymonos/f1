@@ -6,17 +6,17 @@ Script for managing conda environments.
 .PARAMETER Option
 Select script action.
 .PARAMETER CondaFile
-Specify conda file to use.
+Specify path to conda file to be used for creating environment.
 
 .EXAMPLE
-./conda.ps1                     # *Create/update environment
-./conda.ps1 -o 'activate'       # *Activate environment
-./conda.ps1 -o 'deactivate'     # *Deactivate environment
-./conda.ps1 -o 'packages'       # *List packages
-./conda.ps1 -o 'environments'   # *List environments
-./conda.ps1 -o 'update'         # *Update conda
-./conda.ps1 -o 'clean'          # *Clean conda
-./conda.ps1 -o 'remove'         # !Remove environment
+./conda.ps1                # *Create/update environment
+./conda.ps1 activate       # *Activate environment
+./conda.ps1 deactivate     # *Deactivate environment
+./conda.ps1 packages       # *List packages
+./conda.ps1 environments   # *List environments
+./conda.ps1 update         # *Update conda
+./conda.ps1 clean          # *Clean conda
+./conda.ps1 remove         # !Remove environment
 
 $CondaFile = '.tmp/env.yml'
 ./conda.ps1 -f $CondaFile               # *Create/update environment
@@ -26,6 +26,7 @@ $CondaFile = '.tmp/env.yml'
 [CmdletBinding()]
 param (
     [Alias('o')]
+    [Parameter(Position = 0)]
     [ValidateSet('create', 'activate', 'deactivate', 'packages', 'environments', 'clean', 'update', 'remove')]
     [string]$Option = 'create',
 
@@ -50,7 +51,7 @@ if ($Option -in @('create', 'activate', 'remove')) {
 
 # *Execute option
 switch ($Option) {
-    'create' {
+    create {
         # check libmamba solver installation
         if (-not (Get-ChildItem -Path "$env:_CONDA_ROOT/pkgs/" -Filter 'conda-libmamba-solver*' -Directory)) {
             Write-Host 'conda-libmamba-solver not found, installing...'
@@ -71,7 +72,7 @@ switch ($Option) {
         break
     }
 
-    'activate' {
+    activate {
         # *Activate environment
         if ($envExists) {
             Enter-CondaEnvironment $envName
@@ -81,7 +82,7 @@ switch ($Option) {
         break
     }
 
-    'remove' {
+    remove {
         # *Remove environment
         if ($envName -eq 'base') {
             Write-Host "Cannot remove `e[1;4mbase`e[22;24m environment!"
@@ -94,31 +95,31 @@ switch ($Option) {
         break
     }
 
-    'deactivate' {
+    deactivate {
         # *Clean conda
         Exit-CondaEnvironment
         break
     }
 
-    'packages' {
+    packages {
         # *List packages
         Invoke-Conda list
         break
     }
 
-    'environments' {
+    environments {
         # *List environments
         Invoke-Conda env list
         break
     }
 
-    'update' {
+    update {
         # *Update conda
         conda update -y --name base --channel pkgs/main --update-all
         break
     }
 
-    'clean' {
+    clean {
         # *Clean conda
         conda clean -y --all
         break
