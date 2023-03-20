@@ -1,40 +1,41 @@
-"""Speed visualization on track map
+"""
+Speed visualization on track map
 ======================================
-
 (Example provided by @JSEHV on Github)
+python -m src.plot_speed_on_track
 """
 
 import fastf1 as ff1
-import numpy as np
 import matplotlib as mpl
-
+import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.collections import LineCollection
 
-
-ff1.Cache.enable_cache('../doc_cache')  # replace with your cache directory
+ff1.Cache.enable_cache("dist")  # replace with your cache directory
 
 ##############################################################################
 # First, we define some variables that allow us to conveniently control what
 # we want to plot.
-year = 2021
-wknd = 9
-ses = 'R'
-driver = 'RIC'
-colormap = mpl.cm.plasma
-
+YEAR = 2023
+WKND = 1
+SESSION = "R"
+DRIVER = "VER"
+COLORMAP = mpl.cm.plasma
 
 ##############################################################################
 # Next, we load the session and select the desired data.
-session = ff1.get_session(year, wknd, ses)
+schedule = ff1.get_event_schedule(YEAR)
+print(schedule.Location)
+location = int(input("Select location: "))
+session = ff1.get_session(YEAR, location, SESSION)
 weekend = session.event
 session.load()
-lap = session.laps.pick_driver(driver).pick_fastest()
+lap = session.laps.pick_driver(DRIVER).pick_fastest()
 
 # Get telemetry data
-x = lap.telemetry['X']              # values for x-axis
-y = lap.telemetry['Y']              # values for y-axis
-color = lap.telemetry['Speed']      # value to base color gradient on
+x = lap.telemetry["X"]  # values for x-axis
+y = lap.telemetry["Y"]  # values for y-axis
+color = lap.telemetry["Speed"]  # value to base color gradient on
 
 
 ##############################################################################
@@ -51,20 +52,27 @@ segments = np.concatenate([points[:-1], points[1:]], axis=1)
 
 # We create a plot with title and adjust some setting to make it look good.
 fig, ax = plt.subplots(sharex=True, sharey=True, figsize=(12, 6.75))
-fig.suptitle(f'{weekend.name} {year} - {driver} - Speed', size=24, y=0.97)
+fig.suptitle(f"{weekend.name} {YEAR} - {DRIVER} - Speed", size=24, y=0.97)
 
 # Adjust margins and turn of axis
 plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.12)
-ax.axis('off')
+ax.axis("off")
 
 
 # After this, we plot the data itself.
 # Create background track line
-ax.plot(lap.telemetry['X'], lap.telemetry['Y'], color='black', linestyle='-', linewidth=16, zorder=0)
+ax.plot(
+    lap.telemetry["X"],
+    lap.telemetry["Y"],
+    color="black",
+    linestyle="-",
+    linewidth=16,
+    zorder=0,
+)
 
 # Create a continuous norm to map from data points to colors
 norm = plt.Normalize(color.min(), color.max())
-lc = LineCollection(segments, cmap=colormap, norm=norm, linestyle='-', linewidth=5)
+lc = LineCollection(segments, cmap=COLORMAP, norm=norm, linestyle="-", linewidth=5)
 
 # Set the values used for colormapping
 lc.set_array(color)
@@ -72,12 +80,12 @@ lc.set_array(color)
 # Merge all line segments together
 line = ax.add_collection(lc)
 
-
 # Finally, we create a color bar as a legend.
 cbaxes = fig.add_axes([0.25, 0.05, 0.5, 0.05])
 normlegend = mpl.colors.Normalize(vmin=color.min(), vmax=color.max())
-legend = mpl.colorbar.ColorbarBase(cbaxes, norm=normlegend, cmap=colormap, orientation="horizontal")
-
+legend = mpl.colorbar.ColorbarBase(
+    cbaxes, norm=normlegend, cmap=COLORMAP, orientation="horizontal"
+)
 
 # Show the plot
 plt.show()
