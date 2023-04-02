@@ -17,9 +17,8 @@
   "[shellscript]": {
     "editor.tabSize": 2
   },
-  "jupyter.alwaysScrollOnNewCell": true,
   "jupyter.notebookFileRoot": "${workspaceFolder}",
-  "jupyter.sendSelectionToInteractiveWindow": true,
+  "jupyter.interactiveWindow.textEditor.executeSelection": true,
   "python.formatting.provider": "black",
   "python.linting.enabled": true,
   "python.linting.flake8Args": [
@@ -32,9 +31,5 @@
     "--ignore=D200,D205,D212,D400,D415"
   ],
   "python.linting.pydocstyleEnabled": true,
-  "python.linting.pylintArgs": [
-    "--disable=broad-except,abstract-class-instantiated",
-    "--max-line-length=88"
-  ],
   "python.linting.pylintEnabled": true
 }

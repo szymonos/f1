@@ -7,11 +7,12 @@ python -m src.session
 import os
 
 import fastf1
+
 from scripts import df_info
 
 # %%~Specification
 # working folders
-YEAR = 2022
+YEAR = 2023
 SESSION = "R"
 CACHE_DIR = "dist"
 DF_INFO = False
@@ -45,5 +46,3 @@ print(f'Results saved to \033[4m{CACHE_DIR}/laps.csv\033[24m')
 # %%
 if DF_INFO:
     df_info(laps)
-
-# %%

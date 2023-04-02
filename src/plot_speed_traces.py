@@ -2,10 +2,8 @@
 Overlaying speed traces of two laps
 ===================================
 Compare two fastest laps by overlaying their speed traces.
-python -m plot_speed_traces
+python -m src.plot_speed_traces
 """
-
-# %% Load modules
 import os
 
 import fastf1.plotting
@@ -17,9 +15,9 @@ matplotlib.rcParams["figure.dpi"] = 200
 # FastF1's default color scheme
 fastf1.plotting.setup_mpl()
 
-# %%~Specification
-YEAR = 2022
-GP = "Jeddah"
+# ~Specification
+YEAR = 2023
+SESSION = "Q"
 DRIVER_1 = "PER"
 DRIVER_2 = "LEC"
 TEAM_1 = "RBR"
@@ -40,10 +38,12 @@ if not os.path.exists(CACHE_DIR):
     os.makedirs(CACHE_DIR)
 fastf1.Cache.enable_cache(CACHE_DIR)  # replace with your cache directory
 
-# %% Load session details
 # enable some matplotlib patches for plotting timedelta values and load
 # load a session and its telemetry data
-session = fastf1.get_session(YEAR, GP, "Q")
+schedule = fastf1.get_event_schedule(YEAR)
+print(schedule.Location)
+location = int(input("Select location: "))
+session = fastf1.get_session(YEAR, location, SESSION)
 session.load()
 
 # compare laps
@@ -65,7 +65,6 @@ else:
 driver1_tel = driver1_lap.get_car_data().add_distance()
 driver2_tel = driver2_lap.get_car_data().add_distance()
 
-# %% Plot comparison
 # Finally, we create a plot and plot both speed traces.
 # We color the individual lines with the driver's team colors.
 rbr_color = fastf1.plotting.team_color(TEAM_1)

@@ -1,8 +1,8 @@
 """
 Qualifying results overview
 ===========================
-
 Plot the qualifying result with visualization the fastest times.
+python -m src.plot_qualifying_results
 """
 import fastf1
 import fastf1.plotting
@@ -11,52 +11,51 @@ import pandas as pd
 from fastf1.core import Laps
 from timple.timedelta import strftimedelta
 
-fastf1.Cache.enable_cache("../doc_cache")  # replace with your cache directory
+# ~Specification
+YEAR = 2023
+SESSION = "Q"
+CACHE_DIR = "dist"
+
+fastf1.Cache.enable_cache(CACHE_DIR)  # replace with your cache directory
 
 # we only want support for timedelta plotting in this example
 fastf1.plotting.setup_mpl(
     mpl_timedelta_support=True, color_scheme=None, misc_mpl_mods=False
 )
 
-session = fastf1.get_session(2021, "Spanish Grand Prix", "Q")
+schedule = fastf1.get_event_schedule(YEAR)
+print(schedule.Location)
+location = int(input("Select location: "))
+session = fastf1.get_session(YEAR, location, SESSION)
 session.load()
-
 
 ##############################################################################
 # First, we need to get an array of all drivers.
-
 drivers = pd.unique(session.laps["Driver"])
 print(drivers)
-
 
 ##############################################################################
 # After that we'll get each drivers fastest lap, create a new laps object
 # from these laps, sort them by lap time and have pandas reindex them to
 # number them nicely by starting position.
-
 list_fastest_laps = list()
 for drv in drivers:
     drvs_fastest_lap = session.laps.pick_driver(drv).pick_fastest()
     list_fastest_laps.append(drvs_fastest_lap)
 fastest_laps = Laps(list_fastest_laps).sort_values(by="LapTime").reset_index(drop=True)
 
-
 ##############################################################################
 # The plot is nicer to look at and more easily understandable if we just plot
 # the time differences. Therefore we subtract the fastest lap time from all
 # other lap times.
-
 pole_lap = fastest_laps.pick_fastest()
 fastest_laps["LapTimeDelta"] = fastest_laps["LapTime"] - pole_lap["LapTime"]
-
 
 ##############################################################################
 # We can take a quick look at the laps we have to check if everything
 # looks all right. For this, we'll just check the 'Driver', 'LapTime'
 # and 'LapTimeDelta' columns.
-
 print(fastest_laps[["Driver", "LapTime", "LapTimeDelta"]])
-
 
 ##############################################################################
 # Finally, we'll create a list of team colors per lap to color our plot.
@@ -64,7 +63,6 @@ team_colors = list()
 for index, lap in fastest_laps.iterlaps():
     color = fastf1.plotting.team_color(lap["Team"])
     team_colors.append(color)
-
 
 ##############################################################################
 # Now, we can plot all the data
@@ -86,10 +84,8 @@ ax.set_axisbelow(True)
 ax.xaxis.grid(True, which="major", linestyle="--", color="black", zorder=-1000)
 # sphinx_gallery_defer_figures
 
-
 ##############################################################################
 # Finally, give the plot a meaningful title
-
 lap_time_string = strftimedelta(pole_lap["LapTime"], "%m:%s.%ms")
 
 plt.suptitle(
