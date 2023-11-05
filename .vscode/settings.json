@@ -1,35 +1,17 @@
 {
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features",
-    "editor.tabSize": 2
-  },
-  "[powershell]": {
-    "editor.semanticHighlighting.enabled": true
-  },
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.formatOnType": true,
     "editor.rulers": [
-      72,
+      79,
       88
     ],
     "editor.tabSize": 4
-  },
-  "[shellscript]": {
-    "editor.tabSize": 2
-  },
-  "jupyter.notebookFileRoot": "${workspaceFolder}",
-  "jupyter.interactiveWindow.textEditor.executeSelection": true,
-  "python.formatting.provider": "black",
-  "python.linting.enabled": true,
-  "python.linting.flake8Args": [
-    "--max-line-length=88",
-    "--ignore=E203,E722,W503"
-  ],
-  "python.linting.flake8Enabled": true,
-  "python.linting.mypyEnabled": true,
-  "python.linting.pydocstyleArgs": [
-    "--ignore=D200,D205,D212,D400,D415"
-  ],
-  "python.linting.pydocstyleEnabled": true,
-  "python.linting.pylintEnabled": true
+  }
 }
