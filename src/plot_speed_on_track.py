@@ -1,11 +1,14 @@
+#!/usr/bin/env python3
 """
-Speed visualization on track map
-======================================
+Speed visualization on track map.
+
 (Example provided by @JSEHV on Github)
-python -m src.plot_speed_on_track
+
+# :example
+src/plot_speed_on_track.py
 """
 
-import fastf1 as ff1
+import fastf1 as ff1  # type: ignore
 import matplotlib as mpl
 import numpy as np
 from matplotlib import pyplot as plt

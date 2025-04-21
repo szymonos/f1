@@ -1,15 +1,17 @@
+#!/usr/bin/env python3
 """
-Qualification battle
-==========================
-python -m src.quali_battle
+Qualification battle.
+
+# :example
+src/quali_battle.py
 """
 
 # %% Import modules
 import matplotlib.pyplot as plt
 import pandas as pd
 import requests
-import seaborn as sns
-from fastf1 import plotting
+import seaborn as sns  # type: ignore
+from fastf1 import plotting  # type: ignore
 
 
 # %%
