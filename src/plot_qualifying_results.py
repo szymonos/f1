@@ -1,15 +1,19 @@
+#!/usr/bin/env python3
 """
-Qualifying results overview
-===========================
+Qualifying results overview.
+
 Plot the qualifying result with visualization the fastest times.
-python -m src.plot_qualifying_results
+
+# :example
+src/plot_qualifying_results.py
 """
-import fastf1
-import fastf1.plotting
+
+import fastf1  # type: ignore
+import fastf1.plotting  # type: ignore
 import matplotlib.pyplot as plt
 import pandas as pd
-from fastf1.core import Laps
-from timple.timedelta import strftimedelta
+from fastf1.core import Laps  # type: ignore
+from timple.timedelta import strftimedelta  # type: ignore
 
 # ~Specification
 YEAR = 2023

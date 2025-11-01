@@ -1,13 +1,12 @@
+#!/usr/bin/env python3
 """
-Gear shifts on track
-=======================
-Plot which gear is being used at which point of the track
-python -m src.plot_gear_shifts_on_track
-"""
-##############################################################################
-# Import FastF1 and load the data
+Gear shifts on track.
 
-import fastf1
+# :example
+src/plot_gear_shifts_on_track.py
+"""
+
+import fastf1  # type: ignore
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import cm

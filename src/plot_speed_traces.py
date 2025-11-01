@@ -1,12 +1,16 @@
+#!/usr/bin/env python3
 """
-Overlaying speed traces of two laps
-===================================
+Overlaying speed traces of two laps.
+
 Compare two fastest laps by overlaying their speed traces.
-python -m src.plot_speed_traces
+
+# :example
+src/plot_speed_traces.py
 """
+
 import os
 
-import fastf1.plotting
+import fastf1.plotting  # type: ignore
 import matplotlib
 from matplotlib import pyplot as plt
 

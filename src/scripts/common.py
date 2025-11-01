@@ -3,6 +3,7 @@ common.py.
 
 This module contains common functions used in other modules.
 """
+
 from datetime import datetime
 
 import numpy as np
@@ -29,9 +30,9 @@ def df_info(df: pd.DataFrame, clean: bool = False) -> pd.DataFrame:
     start = datetime.now()
     if clean:
         df.fillna(np.nan, inplace=True)  # replace None with np.nan
-        df = df.applymap(
-            lambda x: x.strip() if isinstance(x, str) else x
-        )  # trim spaces
+        # remove leading and trailing whitespace from string columns
+        for col in df.select_dtypes(include=["object", "string"]).columns:
+            df[col] = df[col].apply(lambda x: x.strip() if isinstance(x, str) else x)
         df.replace("", np.nan, inplace=True)
     dmem = df.memory_usage(deep=True).to_dict()
     dmem.pop("Index", None)
@@ -42,11 +43,7 @@ def df_info(df: pd.DataFrame, clean: bool = False) -> pd.DataFrame:
             v,
             df[v]
             .astype("object")
-            .apply(
-                lambda r: len(r) != len(r.encode())
-                if isinstance(r, str)
-                else False
-            )
+            .apply(lambda r: len(r) != len(r.encode()) if isinstance(r, str) else False)
             .any(),
         )
         for v in df.columns.values

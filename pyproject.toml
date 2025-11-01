@@ -1,0 +1,62 @@
+[project]
+name = "f1"
+version = "1.0.0"
+requires-python = "~=3.12.0"
+dependencies = [
+  # dev
+  "certifi",
+  "ipykernel",
+  "notebook",
+  "pip",
+  "python-dotenv",
+  "setuptools",
+  # f1
+  "pandas",
+  "pandas-stubs",
+  "requests",
+  "seaborn",
+  "matplotlib",
+  "types-requests",
+  "fastf1",
+  "pypath-magic",
+]
+
+[tool.uv]
+compile-bytecode = true
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+
+[tool.ruff.lint]
+fixable = ["ALL"]
+select = ["E", "F", "W", "C90", "D", "I", "N", "TD"]
+ignore = [
+  "E731",  # Do not assign a lambda expression, use a def
+  "N817",  # Camelcase (class) imported as acronym
+  "D203",  # 1 blank line required before class docstring
+  "D212",  # Multi-line docstring summary should start at the first line
+  "D403",  # First word of the first line should be properly capitalized
+  "D401",  # First line should be in imperative mood
+  "D413",  # Missing blank line after last section
+  "TD002", # Missing author in TODO
+]
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.mccabe]
+# Flag errors (`C901`) whenever the complexity level exceeds given value
+max-complexity = 15
+
+[tool.ruff.lint.pep8-naming]
+extend-ignore-names = ["*KiB*"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
